@@ -12,14 +12,20 @@ def main():
         acl = parse_acl(acl)
         print(acl)
 
+    with open(sys.argv[3],'rb') as a:
+        pass
+
 def parse_acl(acl):
-    d = collections.defaultdict(list)
+    d = collections.defaultdict(lambda: collections.defaultdict(list))
     key = ''
     for l in acl:
         if not l.startswith(' '):
             key = l.strip().strip(':')
         else:
-            d[key].append(make_colon_dict(l.strip()))
+            l = l.strip()
+            if any(l):
+                group, members = clean_line(l)
+                d[key][group] = members
     return d
 
 def parse_groups(g):
@@ -27,9 +33,7 @@ def parse_groups(g):
     for l in g:
         l = l.strip()
         if any(l): 
-            group, members = l.split(":");
-            members = members.split(",")
-            members = [x.strip() for x in members]
+            group, members = clean_line(l)
             d[group] = members
     inv_d = collections.defaultdict(list) 
     for key, values in d.iteritems():
@@ -37,15 +41,11 @@ def parse_groups(g):
             inv_d[value].append(key)
     return inv_d
 
-def make_colon_dict(line):
-    d = collections.defaultdict(list)
-    if any(line): 
-        group, members = line.split(":");
-        members = members.split(",")
-        members = [x.strip() for x in members]
-        d[group] = members
-    return d
-
+def clean_line(line):
+    group, members = line.split(":")
+    members = members.split(",")
+    members = [x.strip() for x in members]
+    return group, members
 
 def usage(script):
     print("USAGE: %s groups resources actions" % script)
