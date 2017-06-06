@@ -18,10 +18,10 @@ def parse_groups(g):
     d = collections.defaultdict(list)
     for l in g:
         # parse dem colons, yo
-
-
+        group, members = l.split(":");
+        members = members.split(", ")
         d[group] = members
-        
+
 
     #return dict([v,k] for k,v in d.iteritems())
 
@@ -33,5 +33,3 @@ if __name__=="__main__":
     if len(sys.argv) != 4:
         usage(sys.argv[0])
     main()
-
-
