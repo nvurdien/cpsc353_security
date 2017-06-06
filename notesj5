@@ -1,0 +1,38 @@
+weakness: inherent issues
+vulnerabilities: like weaknesses but more specific
+exploits: is the implementation of a vulnerability
+attacks: exploits happening in real time
+threats: possibility of attack
+risk: something that could happen
+    cost * probability
+
+
+
+threat models
+security isn't binary, on a spectrum
+    more or less secure (against what?)
+
+security is a process, not a product
+
+methods of auth:
+tumbler -- something you have
+combo -- something you know
+
+can be combined to a two-factor auth
+i.e bankpin and card
+
+q. how to open a lock (unauthorized)?
+    1. guess creds -- brute force
+        lockpick
+    2. steal creds
+    3. overwhelm the system
+    4. destroy the mechanism
+    5. side channel
+
+
+reference vector
+
+auth? compare
+
+new features w/ reference
+feature is almost equivalent to reference

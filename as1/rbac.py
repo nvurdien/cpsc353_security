@@ -2,23 +2,28 @@
 """
 sp00ky skelet0n
 """
-import sys
+import sys, collections
 
 def main():
-    with open(sys.argv[1]) as g, open(sys.argv[2]) as r, open(sys.argv[3]) as a:
+    with open(sys.argv[1],'rb') as g:
         g = parse_groups(g)
-        r = parse_acl(r)
 
-        pass
+    with open(sys.argv[2],'rb') as acl:
+        acl = parse_acl(acl)
 
 def parse_acl(acl):
     pass
 
 def parse_groups(g):
+    d = collections.defaultdict(list)
     for l in g:
+        # parse dem colons, yo
+
+
+        d[group] = members
         
 
-    return dict([v,k] for k,v in g.iteritems())
+    #return dict([v,k] for k,v in d.iteritems())
 
 def usage(script):
     print("USAGE: %s groups resources actions" % script)
