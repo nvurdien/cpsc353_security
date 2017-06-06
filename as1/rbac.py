@@ -7,6 +7,7 @@ import sys, collections
 def main():
     with open(sys.argv[1],'rb') as g:
         g = parse_groups(g)
+        print(g)
 
     with open(sys.argv[2],'rb') as acl:
         acl = parse_acl(acl)
@@ -17,17 +18,17 @@ def parse_acl(acl):
 def parse_groups(g):
     d = collections.defaultdict(list)
     for l in g:
-        # parse dem colons, yo
         l = l.strip()
         if any(l): 
-            print(l)
             group, members = l.split(":");
-            members = members.split(", ")
+            members = members.split(",")
+            members = [x.strip() for x in members]
             d[group] = members
-
-    print(d)
-
-    #return dict([v,k] for k,v in d.iteritems())
+    inv_d = collections.defaultdict(list) 
+    for key, values in d.iteritems():
+        for value in values:
+            inv_d[value].append(key)
+    return inv_d
 
 def usage(script):
     print("USAGE: %s groups resources actions" % script)
