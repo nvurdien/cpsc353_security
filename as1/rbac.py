@@ -18,10 +18,14 @@ def parse_groups(g):
     d = collections.defaultdict(list)
     for l in g:
         # parse dem colons, yo
-        group, members = l.split(":");
-        members = members.split(", ")
-        d[group] = members
+        l = l.strip()
+        if any(l): 
+            print(l)
+            group, members = l.split(":");
+            members = members.split(", ")
+            d[group] = members
 
+    print(d)
 
     #return dict([v,k] for k,v in d.iteritems())
 
