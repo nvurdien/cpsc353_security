@@ -12,32 +12,30 @@ def main():
         acl = parse_acl(acl)
 
     with open(sys.argv[3],'rb') as a:
-        for l in a:
-            user, action, direc = l.split(" ")
-            dir_access = acl[direc.strip()]
-            allow = False
-            for x in g[user.strip()]:
-                if x in dir_access:
-                    if action in dir_access[x]:
-                        allow = True
-            if allow:
-                print "ALLOW %s %s %s" %(user, action, direc)
-            else:
-                print "DENY %s %s %s" %(user, action, direc)
-        pass
+        print_result(a,acl,g)
 
+def print_result(a,acl,g):
+    for l in a:
+        user, action, direc = l.split(" ")
+        dir_access = acl[direc.strip()]
+        for x in g[user.strip()]:
+            if x in dir_access:
+                if action in dir_access[x]:
+                    print "ALLOW %s %s %s" %(user, action, direc)
+                    break
+        else:
+            print "DENY %s %s %s" %(user, action, direc)
 
 def parse_acl(acl):
     d = collections.defaultdict(lambda: collections.defaultdict(list))
-    key = ''
     for l in acl:
         if not l.startswith(' '):
             key = l.strip().strip(':')
         else:
             l = l.strip()
             if any(l):
-                group, members = clean_line(l)
-                d[key][group] = members
+                group, perms = clean_line(l)
+                d[key][group] = perms
     return d
 
 def parse_groups(g):
