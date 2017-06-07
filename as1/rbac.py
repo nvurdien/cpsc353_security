@@ -87,6 +87,13 @@ def parse_groups(g):
     return inv_d
 
 def clean_line(line):
+    """
+    Removes colons from groups and splits each element into a list
+    :param line: line of group to user, seperated with a colon 
+        and delimited by commas
+    :return group: string of group
+    :return members: list of members
+    """
     group, members = line.split(":")
     members = members.split(",")
     members = [x.strip() for x in members]
