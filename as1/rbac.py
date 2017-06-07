@@ -1,10 +1,34 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
-sp00ky skelet0n
+This program implements a simple RBAC system
+
+Input:
+    groups [1]
+        a file describing groups, where each line is in the following format:
+            GROUP: (USER)+
+            seperated by newlines
+    acl [2]
+        a file containing an acl table, each line being:
+            /INSERT/DIR/HERE:
+                GROUP: (USER)+
+                  .       .
+                  .       .
+    actions [3]
+        a file of actions to be authorized like:
+            USER ACTION DIR
+
+
+    Outputs either DENY or ACCEPT for each action, given the group and acl tables
+            
 """
 import sys, collections
 
+__author__ = "Christopher Grant and Navie Vurdien"
+
 def main():
+    """
+    driver function
+    """
     with open(sys.argv[1],'rb') as g:
         g = parse_groups(g)
 
@@ -15,6 +39,17 @@ def main():
         print_result(a,acl,g)
 
 def print_result(a,acl,g):
+    """
+    prints out formatted string expressing the authorization result
+    :param a: a file object pointing to a file of given actions 
+    :param acl: dictionary of dictionaries mapped as 'dir: dict' where the 
+        inside dict is mapped as 'user: group(s)' which gives permissions 
+        of each group given a directory
+    :param g: dictionary of lists describing group membership 
+        mapped as 'user: group(s)'
+    :return: N/A
+    
+    """
     for l in a:
         user, action, direc = l.split(" ")
         dir_access = acl[direc.strip()]
