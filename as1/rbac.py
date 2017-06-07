@@ -27,10 +27,15 @@ def print_result(a,acl,g):
             print "DENY %s %s %s" %(user, action, direc)
 
 def parse_acl(acl):
+    """Create a defaultdict that stores the permissions each group has in a directory
+    key -- directory
+    values -- key = group
+                values = permissions
+    """
     d = collections.defaultdict(lambda: collections.defaultdict(list))
     for l in acl:
         if not l.startswith(' '):
-            key = l.strip().strip(':')
+            key = l.strip().strip(':') #key is the directory
         else:
             l = l.strip()
             if any(l):
@@ -39,6 +44,10 @@ def parse_acl(acl):
     return d
 
 def parse_groups(g):
+    """Create a defaultdict that stores the members in each group
+    key -- group
+    values -- members in group
+    """
     d = collections.defaultdict(list)
     for l in g:
         l = l.strip()
@@ -46,12 +55,15 @@ def parse_groups(g):
             group, members = clean_line(l)
             d[group] = members
     inv_d = collections.defaultdict(list)
+    # invert dictionary
     for key, values in d.iteritems():
         for value in values:
             inv_d[value].append(key)
     return inv_d
 
 def clean_line(line):
+    """Splits the lines between colons and commas and strips spaces from the lines
+    """
     group, members = line.split(":")
     members = members.split(",")
     members = [x.strip() for x in members]
