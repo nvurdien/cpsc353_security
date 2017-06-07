@@ -19,7 +19,7 @@ Input:
 
 
     Outputs either DENY or ACCEPT for each action, given the group and acl tables
-            
+
 """
 import sys, collections
 
@@ -41,14 +41,14 @@ def main():
 def print_result(a,acl,g):
     """
     prints out formatted string expressing the authorization result
-    :param a: a file object pointing to a file of given actions 
-    :param acl: dictionary of dictionaries mapped as 'dir: dict' where the 
-        inside dict is mapped as 'user: group(s)' which gives permissions 
+    :param a: a file object pointing to a file of given actions
+    :param acl: dictionary of dictionaries mapped as 'dir: dict' where the
+        inside dict is mapped as 'user: group(s)' which gives permissions
         of each group given a directory
-    :param g: dictionary of lists describing group membership 
+    :param g: dictionary of lists describing group membership
         mapped as 'user: group(s)'
     :return: N/A
-    
+
     """
     for l in a:
         user, action, direc = l.split(" ")
@@ -63,9 +63,8 @@ def print_result(a,acl,g):
 
 def parse_acl(acl):
     """Create a defaultdict that stores the permissions each group has in a directory
-    key -- directory
-    values -- key = group
-                values = permissions
+    :param acl: a file object pointing to a file of group permissions to specific directories
+    :return: defaultdict[directory][group][permissions]
     """
     d = collections.defaultdict(lambda: collections.defaultdict(list))
     for l in acl:
@@ -80,8 +79,8 @@ def parse_acl(acl):
 
 def parse_groups(g):
     """Create a defaultdict that stores the members in each group
-    key -- group
-    values -- members in group
+    :param g: a file object pointing to a file of members in groups
+    :return: defaultdict[members][groups]
     """
     d = collections.defaultdict(list)
     for l in g:
@@ -97,16 +96,11 @@ def parse_groups(g):
     return inv_d
 
 def clean_line(line):
-<<<<<<< HEAD
-    """Splits the lines between colons and commas and strips spaces from the lines
-=======
-    """
-    Removes colons from groups and splits each element into a list
-    :param line: line of group to user, seperated with a colon 
+    """Removes colons from groups and splits each element into a list
+    :param line: line of group to user, seperated with a colon
         and delimited by commas
     :return group: string of group
     :return members: list of members
->>>>>>> origin/master
     """
     group, members = line.split(":")
     members = members.split(",")
