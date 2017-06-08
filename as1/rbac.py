@@ -17,7 +17,6 @@ Input:
         a file of actions to be authorized like:
             USER ACTION DIR
 
-
     Outputs either DENY or ACCEPT for each action, given the group and acl tables
 
 """
@@ -48,7 +47,6 @@ def print_result(a,acl,g):
     :param g: dictionary of lists describing group membership
         mapped as 'user: group(s)'
     :return: N/A
-
     """
     for l in a:
         user, action, direc = l.split(" ")
