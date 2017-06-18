@@ -14,11 +14,13 @@ s = set()
 this_ip = get_ip_address()
 
 def main():
-    print this_ip
     sniff(prn=print_new_ip,store=0)
 
 def resolve_host(ip):
-    return socket.gethostbyaddr(ip)[0]
+    try:
+        return socket.gethostbyaddr(ip)[0]
+    except socket.error:
+        return ip
 
 def print_new_ip(pkt):
     if IP in pkt:
@@ -26,7 +28,7 @@ def print_new_ip(pkt):
         dest_ip= pkt[IP].dst
         if src_ip == this_ip and dest_ip not in s:
             s.add(dest_ip)
-            return dest_ip
+            return resolve_host(dest_ip)
 
 if __name__=="__main__":
     main()
