@@ -29,7 +29,9 @@ def auth(packet):
         if packet.haslayer(TCP) and packet.getlayer(TCP).dport == dport:
             if packet.haslayer(Raw) and "Authorization: Basic" in packet.getlayer(Raw).load:
                 cred = packet.getlayer(Raw).load
-                cred = cred[cred.find("Authorization: Basic ")+ len("Authorization: Basic "):cred.find("=")]
+                start = cred.find("Authorization: Basic ")+ len("Authorization: Basic ")
+                end = cred.find("=", start)
+                cred = cred[start:end]
                 missing_padding = len(cred) % 4
                 if missing_padding != 0:
                     cred += b'='* (4 - missing_padding)
