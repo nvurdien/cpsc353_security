@@ -6,6 +6,10 @@ import socket
 from scapy.all import *
 
 def get_ip_address():
+    """
+    gets local IP address
+    :returns local IP
+    """
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
     return s.getsockname()[0]
@@ -14,12 +18,22 @@ st = set()
 this_ip = get_ip_address()
 
 def resolve_host(ip):
+    """
+    finds if the IP address has a hostname
+    :param ip: IP address
+    :returns destination hostname or destination IP address if hostname does not exist
+    """
     try:
         return socket.gethostbyaddr(ip)[0]
     except socket.error:
         return ip
 
 def print_new_ip(pkt):
+    """
+    prints the destination hostname or destination IP address that connect with your IP
+    :param pkt: a scapy packet file
+    :returns destination hostname or destination IP address if hostname does not exist
+    """
     if IP in pkt:
         src_ip = pkt[IP].src
         dest_ip= pkt[IP].dst

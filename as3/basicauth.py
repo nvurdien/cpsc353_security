@@ -9,8 +9,8 @@ from scapy.all import *
 
 def get_ip_address():
     """
-    gets local IP address 
-    :return returns local IP
+    gets local IP address
+    :returns local IP
     """
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
