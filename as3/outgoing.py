@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 """
-sp00ky skelet0n
+this program keeps track of the destination IP addresses it sees when it
+encounters a TCP packet whose source address is your computer's IP address
 """
 import socket
 from scapy.all import *
