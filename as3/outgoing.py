@@ -10,11 +10,8 @@ def get_ip_address():
     s.connect(("8.8.8.8", 80))
     return s.getsockname()[0]
 
-s = set()
+st = set()
 this_ip = get_ip_address()
-
-def main():
-    sniff(prn=print_new_ip,store=0)
 
 def resolve_host(ip):
     try:
@@ -26,9 +23,12 @@ def print_new_ip(pkt):
     if IP in pkt:
         src_ip = pkt[IP].src
         dest_ip= pkt[IP].dst
-        if src_ip == this_ip and dest_ip not in s:
-            s.add(dest_ip)
+        if src_ip == this_ip and dest_ip not in st:
+            st.add(dest_ip)
             return resolve_host(dest_ip)
+
+def main():
+    sniff(prn=print_new_ip,store=0)
 
 if __name__=="__main__":
     main()
