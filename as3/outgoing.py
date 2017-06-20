@@ -43,7 +43,7 @@ def print_new_ip(pkt):
             return resolve_host(dest_ip)
 
 def main():
-    sniff(prn=print_new_ip,store=0)
+    sniff(prn=print_new_ip, filter="tcp",store=0)
 
 if __name__=="__main__":
     main()
