@@ -7,6 +7,8 @@ import socket
 from base64 import *
 from scapy.all import *
 
+__author__='Chris Grant and Navie Vurdien'
+
 def get_ip_address():
     """
     gets local IP address

@@ -6,6 +6,8 @@ encounters a TCP packet whose source address is your computer's IP address
 import socket
 from scapy.all import *
 
+__author__='Chris Grant and Navie Vurdien'
+
 def get_ip_address():
     """
     gets local IP address
